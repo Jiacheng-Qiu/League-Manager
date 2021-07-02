@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Structure
+  - Monster
+  - Display
+  - Attack
+  - Minion
+  - Hero
   layers:
   - Default
   - TransparentFX
@@ -11,8 +17,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Blue
+  - Red
   - 
   - 
   - 
