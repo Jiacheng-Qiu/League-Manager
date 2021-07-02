@@ -9,7 +9,6 @@ public class Particle : MonoBehaviour
     private bool onInit = false;
     public void Init(GameObject target, float attack)
     {
-        Debug.Log(target);
         this.target = target;
         this.attack = attack;
         onInit = true;

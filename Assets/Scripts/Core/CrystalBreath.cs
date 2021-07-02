@@ -25,6 +25,6 @@ public class CrystalBreath : MonoBehaviour
         }
         current += (up) ? speed : -speed;
         transform.position = new Vector3(transform.position.x, origYPos + current, transform.position.z);
-        gameObject.GetComponent<CircleCollider2D>().offset = new Vector2(0, -1 - current);
+        gameObject.GetComponent<CapsuleCollider2D>().offset = new Vector2(0, -current);
     }
 }

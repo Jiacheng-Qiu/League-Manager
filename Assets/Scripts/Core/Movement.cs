@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // General movement class define behavior for all AI
@@ -13,7 +11,7 @@ public class Movement : MonoBehaviour
     private Transform[] nodes;
     private int cur = 0;
     private Animator animator;
-    private int range; // Records the range of not moving, 1 for melee and 3 for caster
+    private float range; // Records the range of not moving, 1 for melee and 3 for caster
     private bool stop = false; // This should only be true when the enemy crystal is destroyed
     public void Init(string side, int line)
     {
@@ -39,24 +37,27 @@ public class Movement : MonoBehaviour
         targetPos = nodes[cur++].position;
         animator = gameObject.GetComponent<Animator>();
 
-        range = (gameObject.name.Contains("Melee")) ? 1 : 3;
-        // Also setup for combat script
-        int type = (gameObject.name.Contains("Melee")) ? 0 : 1;
-        gameObject.GetComponent<MinionCombat>().Init(type, otherside);
+        range = (gameObject.name.Contains("Melee")) ? 1.2f : 3;
+    }
+
+    // Target received from combat script
+    public void SetTarget(GameObject target)
+    {
+        this.target = target;
     }
 
     private void FixedUpdate()
     {
         animator.SetBool("isWalk", false);
-        // Won't move if info isn't given yet
-        if (side == "" || stop)
+        // Won't move if info isn't given yet or destination reached and there are no enemies
+        if (side == "" || (target == null && stop))
         {
             return;
         }
         // Will only move when has a target and is far from it.
         if (target != null)
         {
-            if (Vector2.Distance(target.transform.position, transform.position) <= range)
+            if (Vector3.Distance(target.transform.position, transform.position) <= range)
             {
                 return;
             }
@@ -80,36 +81,7 @@ public class Movement : MonoBehaviour
             else if (cur >= nodes.Length)
             {
                 stop = true;
-                Debug.Log("Stopped");
             }
-        }
-    }
-    // If enemy minions or structure enters sight, attack them instead
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer(otherside))
-        {
-            if (target == null && (collision.gameObject.tag == "Minion" || collision.gameObject.tag == "Structure"))
-            {
-                target = collision.gameObject;
-                gameObject.GetComponent<MinionCombat>().SetTarget(target);
-            }
-            else if (target != null && target.name.Contains("Caster") && collision.gameObject.name.Contains("Melee"))
-            {
-                // Always prioritize melee over casters if there exists
-                target = collision.gameObject;
-                gameObject.GetComponent<MinionCombat>().SetTarget(target);
-            }
-        }
-    }
-
-    // If target exit trigger range, stop chasing
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.Equals(target))
-        {
-            gameObject.GetComponent<MinionCombat>().SetTarget(null);
-            target = null;
         }
     }
 }

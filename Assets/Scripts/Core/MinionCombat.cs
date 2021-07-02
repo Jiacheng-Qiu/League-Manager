@@ -5,17 +5,11 @@ public class MinionCombat : Combat
 {
     public int attackType; // 0=melee, 1=caster
     private Animator animator;
-    public void Init(int attackType, string otherside)
+    public void Start()
     {
         health = maxHealth;
-        this.attackType = attackType;
-        enemyLayer = otherside;
+        this.attackType = (gameObject.name.Contains("Melee")) ? 0 : 1;
         animator = gameObject.GetComponent<Animator>();
-    }
-
-    public void SetTarget(GameObject target)
-    {
-        this.target = target;
     }
 
     private void FixedUpdate()
@@ -46,7 +40,7 @@ public class MinionCombat : Combat
     // For melee minions, once the attack is triggered, damage is instantly dealt to enemy
     private bool MeleeAttack()
     {
-        if (Vector2.Distance(target.transform.position, transform.position) <= 1f)
+        if (Vector2.Distance(target.transform.position, transform.position) <= 1.2f)
         {
             animator.SetTrigger("attack");
             target.GetComponent<Combat>().GetHit(attack);
@@ -59,7 +53,7 @@ public class MinionCombat : Combat
     // For caster minions, the attack will be a bullet, damaging only after it hits enemy
     private bool CasterAttack()
     {
-        if (Vector2.Distance(target.transform.position, transform.position) <= 3)
+        if (Vector2.Distance(target.transform.position, transform.position) <= 3f)
         {
             Particle particle = ((GameObject)Instantiate(Resources.Load("Prefabs/MinionAttack"), transform.position, transform.rotation)).GetComponent<Particle>();
             particle.Init(target, attack);

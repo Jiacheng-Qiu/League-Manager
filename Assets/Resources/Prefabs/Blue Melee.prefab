@@ -210,9 +210,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3915934717677511280}
-  - component: {fileID: 5507026715053953002}
-  m_Layer: 6
-  m_Name: Collider
+  - component: {fileID: 1301350121534622696}
+  - component: {fileID: 454770999698643445}
+  m_Layer: 0
+  m_Name: EnemyDetect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -232,8 +233,8 @@ Transform:
   m_Father: {fileID: 6649748366042625162}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &5507026715053953002
-CapsuleCollider2D:
+--- !u!58 &1301350121534622696
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -242,12 +243,24 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.06, y: 0.03}
-  m_Size: {x: 0.5, y: 0.7}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2
+--- !u!114 &454770999698643445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5192777002101970184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92dd88d8b180d94baf5720da44151df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5241903792154856289
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,9 +612,9 @@ GameObject:
   - component: {fileID: 6649748366042625165}
   - component: {fileID: 6649748366042625164}
   - component: {fileID: 1034588776254088523}
-  - component: {fileID: -8789778017521990302}
   - component: {fileID: 2513992881099630421}
   - component: {fileID: -2818869047650803757}
+  - component: {fileID: 2816060768349943001}
   m_Layer: 6
   m_Name: Blue Melee
   m_TagString: Minion
@@ -718,22 +731,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &-8789778017521990302
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6649748366042625167}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.2
 --- !u!114 &2513992881099630421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -768,8 +765,25 @@ MonoBehaviour:
   defense: 0.1
   attackCD: 2
   lastHit: -2
-  enemyLayer: 
+  enemyLayer: Red
   target: {fileID: 0}
+  attackType: 0
+--- !u!70 &2816060768349943001
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6649748366042625167}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.05, y: 0}
+  m_Size: {x: 0.45, y: 0.75}
+  m_Direction: 0
 --- !u!1 &8961777033853463319
 GameObject:
   m_ObjectHideFlags: 0

@@ -75,5 +75,9 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -2911573308836427485, guid: 3a7dc2e10586a284cbbb43d2998b8ce5, type: 3}
+    - target: {fileID: 8046833270087011692, guid: 03e5799a89988ff458fab7e4d3b45614, type: 3}
+      propertyPath: enemyLayer
+      value: Blue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03e5799a89988ff458fab7e4d3b45614, type: 3}

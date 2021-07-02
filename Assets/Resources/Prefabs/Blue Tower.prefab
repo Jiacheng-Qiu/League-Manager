@@ -175,9 +175,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3354999522209545093}
-  - component: {fileID: 3354999522209545092}
+  - component: {fileID: 6818775288460194315}
+  - component: {fileID: 8643227077119819651}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: EnemyDetect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,8 +198,8 @@ Transform:
   m_Father: {fileID: 3354999523096211482}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &3354999522209545092
-BoxCollider2D:
+--- !u!58 &6818775288460194315
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -207,22 +208,24 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.8}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0, y: -1}
   serializedVersion: 2
-  m_Size: {x: 1.1, y: 0.7}
-  m_EdgeRadius: 0
+  m_Radius: 3.5
+--- !u!114 &8643227077119819651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3354999522209545090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92dd88d8b180d94baf5720da44151df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3354999522383491183
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,9 +354,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3354999523096211482}
   - component: {fileID: 3354999523096211483}
-  - component: {fileID: 3354999523096211480}
   - component: {fileID: 3354999523096211485}
   - component: {fileID: 3354999523096211484}
+  - component: {fileID: 881127245566168614}
   m_Layer: 6
   m_Name: Blue Tower
   m_TagString: Structure
@@ -429,22 +432,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &3354999523096211480
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3354999523096211481}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1}
-  serializedVersion: 2
-  m_Radius: 2.5
 --- !u!114 &3354999523096211485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,6 +552,32 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!61 &881127245566168614
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3354999523096211481}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.15625, y: 2.28125}
+    newSize: {x: 1.15625, y: 2.28125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &3354999523151921008
 GameObject:
   m_ObjectHideFlags: 0

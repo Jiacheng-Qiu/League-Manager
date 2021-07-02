@@ -23,6 +23,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: -2818869047650803757, guid: dee7f8ecfefe0fe41a9891c6c855bcdc, type: 3}
+      propertyPath: enemyLayer
+      value: Blue
+      objectReference: {fileID: 0}
     - target: {fileID: 6649748366042625162, guid: dee7f8ecfefe0fe41a9891c6c855bcdc, type: 3}
       propertyPath: m_RootOrder
       value: 0

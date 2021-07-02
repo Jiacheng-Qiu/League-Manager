@@ -351,9 +351,9 @@ GameObject:
   - component: {fileID: 5607913658977347460}
   - component: {fileID: 1188667298405920727}
   - component: {fileID: 8854456168911985638}
-  - component: {fileID: 7218794166019137865}
   - component: {fileID: 7272492784461577783}
   - component: {fileID: 8046833270087011692}
+  - component: {fileID: 3954018567307045833}
   m_Layer: 6
   m_Name: Blue Caster
   m_TagString: Minion
@@ -470,22 +470,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &7218794166019137865
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2173900698772344418}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 3.5
 --- !u!114 &7272492784461577783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,8 +504,25 @@ MonoBehaviour:
   defense: 0.05
   attackCD: 1
   lastHit: -1
-  enemyLayer: 
+  enemyLayer: Red
   target: {fileID: 0}
+  attackType: 0
+--- !u!70 &3954018567307045833
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173900698772344418}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.05, y: 0}
+  m_Size: {x: 0.4, y: 0.75}
+  m_Direction: 0
 --- !u!1 &3069401250087824014
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,9 +532,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4610913563186480202}
-  - component: {fileID: 5770305510646506844}
-  m_Layer: 6
-  m_Name: Collider
+  - component: {fileID: 7505787913985920307}
+  - component: {fileID: 6037760663080342948}
+  m_Layer: 0
+  m_Name: TargetDetect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -553,8 +555,20 @@ Transform:
   m_Father: {fileID: 3332415346467861455}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &5770305510646506844
-CapsuleCollider2D:
+--- !u!114 &7505787913985920307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3069401250087824014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92dd88d8b180d94baf5720da44151df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &6037760663080342948
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -563,12 +577,12 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.06, y: 0.03}
-  m_Size: {x: 0.5, y: 0.7}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3.5
 --- !u!1 &3401886499717975651
 GameObject:
   m_ObjectHideFlags: 0

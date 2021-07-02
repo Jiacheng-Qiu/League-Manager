@@ -25,6 +25,24 @@ public class Combat : MonoBehaviour
         CheckHP();
     }
 
+    public GameObject GetTarget()
+    {
+        return target;
+    }
+
+    public void SetTarget(GameObject target)
+    {
+        this.target = target;
+        try
+        {
+            gameObject.GetComponent<Movement>().SetTarget(target);
+        }
+        catch
+        {
+            Debug.Log("Target doesn't contain movement script");
+        }
+    }
+
     // Update displayment of HP, magic number for x pos and scale is 4.57
     public void CheckHP()
     {
