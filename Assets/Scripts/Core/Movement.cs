@@ -1,11 +1,11 @@
 using UnityEngine;
 
-// General movement class define behavior for all AI
+// General movement class define behavior for minions
 public class Movement : MonoBehaviour
 {
     public GameObject target; // Represent moving target
     public Vector3 targetPos; // Represent destination axis
-    public float speed = 5f;
+    public float speed = 4f;
     private string side;
     private string otherside;
     private Transform[] nodes;

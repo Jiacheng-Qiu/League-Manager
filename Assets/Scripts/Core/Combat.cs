@@ -14,6 +14,7 @@ public class Combat : MonoBehaviour
     public float lastHit = -2;
     public string enemyLayer = "";
     public GameObject target = null;
+    public bool isImmune = false; // Controls if the object won't take any damage
 
     private void Start()
     {
@@ -30,16 +31,22 @@ public class Combat : MonoBehaviour
         return target;
     }
 
+    public void SetImmune(bool set)
+    {
+        isImmune = set;
+    }
+
     public void SetTarget(GameObject target)
     {
         this.target = target;
         try
         {
+            // TODO: change logic to avoid using this
             gameObject.GetComponent<Movement>().SetTarget(target);
         }
         catch
         {
-            Debug.Log("Target doesn't contain movement script");
+            // Debug.Log("Target doesn't contain movement script");
         }
     }
 
@@ -64,10 +71,10 @@ public class Combat : MonoBehaviour
         return attack;
     }
 
-    // Calculate actual damage attack deals to object, return value shows if attacker killed current obj
-    public bool GetHit(float damage)
+    // Calculate actual damage attack deals to object, return true if attacker killed current obj
+    public bool GetHit(float damage, GameObject attacker)
     {
-        if (health <= 0)
+        if (health <= 0 || isImmune)
         {
             return false;
         }

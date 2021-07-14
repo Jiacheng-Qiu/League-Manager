@@ -5,10 +5,12 @@ public class MinionCombat : Combat
 {
     public int attackType; // 0=melee, 1=caster
     private Animator animator;
+    private bool isRed;
     public void Start()
     {
         health = maxHealth;
         this.attackType = (gameObject.name.Contains("Melee")) ? 0 : 1;
+        this.isRed = gameObject.name.Contains("Red");
         animator = gameObject.GetComponent<Animator>();
     }
 
@@ -43,7 +45,7 @@ public class MinionCombat : Combat
         if (Vector2.Distance(target.transform.position, transform.position) <= 1.2f)
         {
             animator.SetTrigger("attack");
-            target.GetComponent<Combat>().GetHit(attack);
+            target.GetComponent<Combat>().GetHit(attack, gameObject);
         }
         else
             return false;
@@ -56,7 +58,9 @@ public class MinionCombat : Combat
         if (Vector2.Distance(target.transform.position, transform.position) <= 3f)
         {
             Particle particle = ((GameObject)Instantiate(Resources.Load("Prefabs/MinionAttack"), transform.position, transform.rotation)).GetComponent<Particle>();
-            particle.Init(target, attack);
+            particle.gameObject.GetComponent<SpriteRenderer>().color = isRed? Color.red : Color.blue;
+            particle.Init(target, attack, gameObject);
+            particle.transform.parent = GameObject.Find("Attack Folder").transform;
             animator.SetTrigger("attack");
         }
         else

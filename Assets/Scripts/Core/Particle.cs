@@ -6,11 +6,13 @@ public class Particle : MonoBehaviour
     public float speed; // Moving speed of particles
     private GameObject target;
     private float attack;
+    private GameObject attacker;
     private bool onInit = false;
-    public void Init(GameObject target, float attack)
+    public void Init(GameObject target, float attack, GameObject attacker)
     {
         this.target = target;
         this.attack = attack;
+        this.attacker = attacker;
         onInit = true;
     }
 
@@ -38,7 +40,7 @@ public class Particle : MonoBehaviour
     {
         if (other.gameObject.Equals(target))
         {
-            target.GetComponent<Combat>().GetHit(this.attack);
+            target.GetComponent<Combat>().GetHit(this.attack, attacker);
             Destroy(gameObject);
         }
     }

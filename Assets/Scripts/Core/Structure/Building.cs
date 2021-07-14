@@ -1,10 +1,10 @@
-using System.Collections;
 using UnityEngine;
 
 // Script for logic of buildings (tower and crystal)
 public class Building : Combat
 {
     private LineRenderer warningLine;
+    public GameObject previousStructure;
     void Start()
     {
         health = maxHealth;
@@ -29,7 +29,8 @@ public class Building : Combat
         if (target != null)
         {
             Particle particle = ((GameObject)Instantiate(Resources.Load("Prefabs/FireBall"), transform.position + new Vector3(0, 1, 0), transform.rotation)).GetComponent<Particle>();
-            particle.Init(target, attack);
+            particle.Init(target, attack, gameObject);
+            particle.transform.parent = GameObject.Find("Attack Folder").transform;
             return true;
         } else
         {
@@ -37,10 +38,17 @@ public class Building : Combat
         }
     }
 
-    
-
     private void FixedUpdate()
     {
+        // First make sure that this structure will only be damaged when the previous is destroyed, else it cant be damaged
+        if (previousStructure != null)
+        {
+            isImmune = true;
+        } else
+        {
+            isImmune = false;
+        }
+        
         // First check if tower is destroyed, if so attack won't happen
         CheckHP();
         if (target == null)
