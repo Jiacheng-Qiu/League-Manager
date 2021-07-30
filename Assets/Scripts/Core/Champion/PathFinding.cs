@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 // A* path finding using grid of size 30*16 representing map, assign to gameobjects needed
-public class PathFinding : MonoBehaviour
+public class PathFinding
 {
     private bool[,] mapGrid; // Walkable spaces marked as true, other space marked as false
     // The map is symmetry, the terrain pos only records the left half
@@ -11,7 +11,7 @@ public class PathFinding : MonoBehaviour
     private ArrayList open;
     private ArrayList close;
     
-    private void Start()
+    public PathFinding()
     {
         mapGrid = new bool[30, 16];
         string terrainCopy = (string)terrainPos.Clone();
@@ -32,6 +32,7 @@ public class PathFinding : MonoBehaviour
             // Go to next position (x,y)
             terrainCopy = terrainCopy.Substring(terrainCopy.IndexOf("),") + 2);
         }
+        // Set movable pos to true, and terrain to false
         for (int i = 0; i < 30; i++)
         {
             for (int j = 0; j < 16; j++)
@@ -65,33 +66,33 @@ public class PathFinding : MonoBehaviour
         public int Gcost; // Cost from startin pos
         public int Hcost; // Cost to ending pos
         public int FCost; // Sum of G and H
-        public Vector2 pos; // Position in grid on map
+        public Vector3 pos; // Position in grid on map
         public Node parent; // Set parent node
         public Node(int G, int H, int x, int y)
         {
             Gcost = G;
             Hcost = H;
             FCost = G + H;
-            pos = new Vector2(x, y);
+            pos = new Vector3(x, y, 0);
         }
     }
 
     // Find the path using A*
-    public Node FindPath(Vector3 startPos, Vector3 endPos)
+    public ArrayList FindPath(Vector3 startPos, Vector3 endPos)
     {
         // Find the square pos of start and end pos
-        int startX = (int)startPos.x;
-        int startY = (int)startPos.y;
-        int endX = (int)endPos.x;
-        int endY = (int)endPos.y;
+        int startX = (int)(startPos.x + 15); 
+        int startY = (int)(startPos.y + 8);
+        int endX = (int)(endPos.x + 15);
+        int endY = (int)(endPos.y + 8);
         // Check if any of the square is terrain, if so find the closest available ones
-        Vector2 response = CheckAvailable(startPos);
+        Vector2 response = CheckAvailable(new Vector3(startX, startY, 0));
         if (response.x != -1)
         {
             startX = (int)response.x;
             startY = (int)response.y;
         }
-        response = CheckAvailable(endPos);
+        response = CheckAvailable(new Vector3(endX, endY, 0));
         if (response.x != -1)
         {
             endX = (int)response.x;
@@ -113,7 +114,15 @@ public class PathFinding : MonoBehaviour
                 // Renew everything for next use
                 open.Clear();
                 close.Clear();
-                return current;
+
+                // Return an arraylist of node path in order
+                ArrayList path = new ArrayList();
+                while (current.parent != null)
+                {
+                    path.Insert(0, current.pos + new Vector3(-14.5f, -7.5f, 0));
+                    current = current.parent;
+                }
+                return path;
             }
 
             Vector2[] posList = new Vector2[4];

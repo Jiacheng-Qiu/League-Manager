@@ -1,10 +1,8 @@
 using UnityEngine;
 
 // Movement of monsters
-public class MonsterMovement : MonoBehaviour
+public class MonsterMovement : Movement
 {
-    public float speed = 4f;
-    public GameObject target; // Monsters only attack anything that recently attacked them
     public bool isAlwaysMoving = false; // Only one type of monster is always moving and needs direction instructions
     public int nodeAmount = 8; // Change if there are more or less spots on path
     public Transform basePos;
@@ -28,22 +26,25 @@ public class MonsterMovement : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
     }
 
-    public void SetTarget(GameObject target)
-    {
-        this.target = target;
-    }
-
     private void FixedUpdate()
     {
+        Vector3 targetPos;
         animator.SetBool("isWalk", false);
+        // In case that monster is affected by dizzy debuff, it stops any movement
+        if (moveable)
+        {
+            return;
+        }
         if (isAlwaysMoving && target == null)
         {
+            targetPos = nodes[currentAim].position;
             transform.position += (nodes[currentAim].position - transform.position).normalized * speed * Time.deltaTime;
             animator.SetBool("isWalk", true);
         }
         else if (target != null)
         {
             // TODO
+            targetPos = target.transform.position;
             if (Vector3.Distance(target.transform.position, transform.position) <= 1)
             {
                 return;
@@ -51,6 +52,9 @@ public class MonsterMovement : MonoBehaviour
             // Using target
             transform.position += (target.transform.position - transform.position).normalized * speed * Time.deltaTime;
             animator.SetBool("isWalk", true);
+        }else
+        {
+            targetPos = transform.position;
         }
 
         // If monster is too far from its spawn, it will go back and reset target
@@ -65,5 +69,16 @@ public class MonsterMovement : MonoBehaviour
             currentAim %= nodeAmount; // Only contain 0 to n-1
         }
 
+        // Switch gameobject rotation and hp rotation based on target position
+        if ((targetPos - transform.position).x >= 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            //transform.Find("HPBar").localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            //transform.Find("HPBar").localScale = new Vector3(-1, 1, 1);
+        }
     }
 }

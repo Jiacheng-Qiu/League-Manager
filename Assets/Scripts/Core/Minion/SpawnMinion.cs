@@ -31,10 +31,10 @@ public class SpawnMinion : MonoBehaviour
     private void SpawnCaster()
     {
         GameObject melee = ((GameObject)Instantiate(Resources.Load("Prefabs/" + side + " Caster"), spawn0.position, spawn0.rotation));
-        melee.GetComponent<Movement>().Init(side, 0);
+        melee.GetComponent<MinionMovement>().Init(side, 0);
         melee.transform.parent = GameObject.Find("Minion Folder").transform;
         melee = ((GameObject)Instantiate(Resources.Load("Prefabs/" + side + " Caster"), spawn1.position, spawn1.rotation));
-        melee.GetComponent<Movement>().Init(side, 1);
+        melee.GetComponent<MinionMovement>().Init(side, 1);
         melee.transform.parent = GameObject.Find("Minion Folder").transform;
         spawnCaster = false;
     }
@@ -43,10 +43,10 @@ public class SpawnMinion : MonoBehaviour
     private void SpawnMelee()
     {
         GameObject melee = ((GameObject)Instantiate(Resources.Load("Prefabs/" + side + " Melee"), spawn0.position, spawn0.rotation));
-        melee.GetComponent<Movement>().Init(side, 0);
+        melee.GetComponent<MinionMovement>().Init(side, 0);
         melee.transform.parent = GameObject.Find("Minion Folder").transform;
         melee = ((GameObject)Instantiate(Resources.Load("Prefabs/" + side + " Melee"), spawn1.position, spawn1.rotation));
-        melee.GetComponent<Movement>().Init(side, 1);
+        melee.GetComponent<MinionMovement>().Init(side, 1);
         melee.transform.parent = GameObject.Find("Minion Folder").transform;
         spawnCaster = true;
     }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 // A combat system prototype that defines the combat for all objects in game
 public class Combat : MonoBehaviour
@@ -14,26 +15,69 @@ public class Combat : MonoBehaviour
     public float lastHit = -2;
     public string enemyLayer = "";
     public GameObject target = null;
-    public bool isImmune = false; // Controls if the object won't take any damage
+    public bool isImmune;
+
+    public bool[] controlsActivated; //0=dizzy , 1=blind, 2=silent
+    // Records all current active buffs
+    public ArrayList buffs;
 
     private void Start()
     {
         health = maxHealth;
+        controlsActivated = new bool[3];
+        buffs = new ArrayList();
     }
 
     private void FixedUpdate()
     {
+        CheckBuffState();
         CheckHP();
+    }
+
+    // Check if each buff is deactivated
+    public void CheckBuffState()
+    {
+        for (int i = 0; i < buffs.Count; i++)
+        {
+            Buff cur = (Buff)buffs[i];
+            // Considering the case of different buffs having same control
+            if (cur.controlType != -1)
+                controlsActivated[cur.controlType] = true;
+            if (Time.time >= (cur.startTime + cur.duration))
+            {
+                OnBuffDeactivate(cur);
+                buffs.RemoveAt(i);
+            }
+        }
+    }
+
+    // Receive buffs and active all effects
+    public void OnBuffActivate(Buff buff)
+    {
+        buff.startTime = Time.time;
+        buffs.Add(buff);
+        // Active all effects on player
+        maxHealth += buff.affectedAmount[0];
+        attack += buff.affectedAmount[1];
+        defense += buff.affectedAmount[2];
+        gameObject.GetComponent<Movement>().speed += buff.affectedAmount[3];
+        if (buff.controlType != -1)
+            controlsActivated[buff.controlType] = true;
+    }
+
+    public void OnBuffDeactivate(Buff buff)
+    {
+        maxHealth -= buff.affectedAmount[0];
+        attack -= buff.affectedAmount[1];
+        defense -= buff.affectedAmount[2];
+        gameObject.GetComponent<Movement>().speed -= buff.affectedAmount[3];
+        if (buff.controlType != -1)
+            controlsActivated[buff.controlType] = false;
     }
 
     public GameObject GetTarget()
     {
         return target;
-    }
-
-    public void SetImmune(bool set)
-    {
-        isImmune = set;
     }
 
     public void SetTarget(GameObject target)
@@ -54,7 +98,7 @@ public class Combat : MonoBehaviour
     public void CheckHP()
     {
         float var = 10 * (health / maxHealth);
-        hpBar.localScale = new Vector3(var, 0.9f, 1);
+        hpBar.localScale = new Vector3(var, hpBar.localScale.y, 1);
         hpBar.localPosition = new Vector3((var - 10) / 4.57f, 0, 0);
 
         if (health <= 0)
@@ -63,12 +107,6 @@ public class Combat : MonoBehaviour
             Debug.Log(gameObject.name + " is Dead");
             Destroy(gameObject);
         }
-    }
-
-    // Basic attack using no skills
-    public float Attack()
-    {
-        return attack;
     }
 
     // Calculate actual damage attack deals to object, return true if attacker killed current obj

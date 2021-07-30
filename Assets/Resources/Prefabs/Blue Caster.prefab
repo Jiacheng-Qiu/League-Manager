@@ -351,9 +351,9 @@ GameObject:
   - component: {fileID: 5607913658977347460}
   - component: {fileID: 1188667298405920727}
   - component: {fileID: 8854456168911985638}
-  - component: {fileID: 7272492784461577783}
   - component: {fileID: 8046833270087011692}
   - component: {fileID: 3954018567307045833}
+  - component: {fileID: 4163280244085804213}
   m_Layer: 6
   m_Name: Blue Caster
   m_TagString: Minion
@@ -470,21 +470,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &7272492784461577783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2173900698772344418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 378342a83cfa8ad488b5fe262ec73395, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  targetPos: {x: 0, y: 0, z: 0}
-  speed: 3
 --- !u!114 &8046833270087011692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,6 +491,8 @@ MonoBehaviour:
   lastHit: -1
   enemyLayer: Red
   target: {fileID: 0}
+  isImmune: 0
+  controlsActivated: 
   attackType: 0
 --- !u!70 &3954018567307045833
 CapsuleCollider2D:
@@ -523,6 +510,22 @@ CapsuleCollider2D:
   m_Offset: {x: -0.05, y: 0}
   m_Size: {x: 0.4, y: 0.75}
   m_Direction: 0
+--- !u!114 &4163280244085804213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173900698772344418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c095cdf5b6137849877fbf5f9267094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  targetPos: {x: 0, y: 0, z: 0}
+  speed: 4
+  moveable: 0
 --- !u!1 &3069401250087824014
 GameObject:
   m_ObjectHideFlags: 0

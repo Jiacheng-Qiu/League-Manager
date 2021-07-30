@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 // Combat logic of minions, they only attack first enemy they see
 public class MinionCombat : Combat
@@ -9,6 +10,8 @@ public class MinionCombat : Combat
     public void Start()
     {
         health = maxHealth;
+        controlsActivated = new bool[3];
+        buffs = new ArrayList();
         this.attackType = (gameObject.name.Contains("Melee")) ? 0 : 1;
         this.isRed = gameObject.name.Contains("Red");
         animator = gameObject.GetComponent<Animator>();
@@ -16,12 +19,16 @@ public class MinionCombat : Combat
 
     private void FixedUpdate()
     {
+        CheckBuffState();
         CheckHP();
+        // Change moving state according to current buff
+        gameObject.GetComponent<Movement>().SetMoveable(controlsActivated[0]);
         if (enemyLayer == null)
         {
             return;
         }
-        if (target != null && Time.time >= lastHit + attackCD && target != null)
+        // Debuff also affect if attack is possible
+        if (!controlsActivated[1] && target != null && Time.time >= lastHit + attackCD && target != null)
         {
             switch (attackType)
             {
