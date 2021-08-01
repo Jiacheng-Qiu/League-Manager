@@ -10,13 +10,16 @@ public class Hero : MonoBehaviour
     private int teamStrategy;
     private int strategy;
     private int role; // 0=jungle, 1=control, 2=damage
+    public int totalGold; // Shows total gold earned till now (including spent)
+    public int gold; // Shows gold currently have
+    public float damageDone; // Shows total damage done to heroes
+    public int kills; // Record heroes killed
+    public int deaths; // Record amount of times died
 
-    private void Start()
+    public void Init(int role, string heroName)
     {
         // Load all resources and info associated with the hero name
-
-        // Assign position to enable switching strategies
-
+        
     }
 
     private void FixedUpdate()

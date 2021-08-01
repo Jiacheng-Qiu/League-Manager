@@ -12,7 +12,9 @@ public class HeroCombat : Combat
     {
         skills = new Skill[3];
         skillLastUsed = new float[3];
-        //TODO: Read skills from file
+        //TODO: Read skills and stat from file
+
+
 
         health = maxHealth;
         controlsActivated = new bool[3];
@@ -33,24 +35,13 @@ public class HeroCombat : Combat
 
         // Control types will also affect behavior
         gameObject.GetComponent<HeroMovement>().SetMoveable(controlsActivated[0]);
-        if (!controlsActivated[0])
-        {
-            if (!controlsActivated[1])
-            {
-                UseSkill(0);
-            }
-            if (!controlsActivated[2])
-            {
-                UseSkill(1);
-                UseSkill(2);
-            }
-        }
     }
 
     // Use the given skill
     public void UseSkill(int i)
     {
-        if (target == null)
+        // In case of debuffs or no target, skill use will not be successful
+        if (controlsActivated[0] || (i == 0 && controlsActivated[1]) || (i != 0 && controlsActivated[2]) || target == null)
         {
             return;
         }
