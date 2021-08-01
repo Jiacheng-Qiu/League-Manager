@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Control script that receives button inputs and send to associated player
-public class TeamControl : MonoBehaviour
+// Control script that deal with strategy inputs, and update UI with game info
+public class MacroControl : MonoBehaviour
 {
     // Record the side that player is on
     public string playerSide;
@@ -26,6 +26,8 @@ public class TeamControl : MonoBehaviour
         playerSide = "Red";
         // Read the heroes going to be used on each side from system file
 
+        // GameObject.Find("GameCanvas").transform.Find("BattleUI").Find("Red Name").GetComponent<Text>().text = 
+        // GameObject.Find("GameCanvas").transform.Find("BattleUI").Find("Blue Name").GetComponent<Text>().text = 
         // First fetch and assign heroes onto specific positions in game
         Resources.Load("Prefabs/Heroes/");
 
