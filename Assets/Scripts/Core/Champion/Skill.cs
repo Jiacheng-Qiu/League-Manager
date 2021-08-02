@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill: MonoBehaviour
+public class Skill
 {
     public float cd;
     public bool isMelee; // Melee attack deals damage instantly
@@ -15,5 +15,5 @@ public class Skill: MonoBehaviour
     public bool hasBuff;
     public Buff buff; // Skills can create buffs on targets
     public float fixedDamage; // The fixed amount of damage skill does on target (negative=heal)
-    public float floatDamage; // Amount of damage that changes based on hero attack
+    public float floatDamage; // Amount of damage that changes based on hero attack (by percentage)
 }

@@ -24,12 +24,23 @@ public class MacroControl : MonoBehaviour
     private void Start()
     {
         playerSide = "Red";
-        // Read the heroes going to be used on each side from system file
+        // Read the heroes going to be used on each side from files
+
 
         // GameObject.Find("GameCanvas").transform.Find("BattleUI").Find("Red Name").GetComponent<Text>().text = 
         // GameObject.Find("GameCanvas").transform.Find("BattleUI").Find("Blue Name").GetComponent<Text>().text = 
         // First fetch and assign heroes onto specific positions in game
-        Resources.Load("Prefabs/Heroes/");
+        // Resources.Load("Prefabs/Heroes/");
+
+        // Put all six heroes on position
+        GameObject hero = Instantiate(Resources.Load("Heroes/HeroSample")) as GameObject;
+        hero.name = "JG";
+        hero.GetComponent<Hero>().Init(0, "Killer", "Red");
+        hero.layer = LayerMask.NameToLayer("Red");
+        hero.transform.SetParent(GameObject.Find("Hero Folder").transform.Find("Red"));
+        hero.transform.position = new Vector3(-14, 6, 0);
+
+
 
         // On startup, set onclick for balance as team strategy, and farm for all heros
         teamButton.GetComponent<Button>().onClick.Invoke();
@@ -52,13 +63,13 @@ public class MacroControl : MonoBehaviour
         switch (role) 
         {
             case 0:
-                //transform.Find(side).Find("Jungler").GetComponent<Hero>().SetStrategy(strat);
+                transform.Find(playerSide).Find("JG").GetComponent<Hero>().SetStrategy(strat);
                 break;
             case 1:
-                //transform.Find(side).Find("Controller").GetComponent<Hero>().SetStrategy(strat);
+                //transform.Find(playerSide).Find("CT").GetComponent<Hero>().SetStrategy(strat);
                 break;
             case 2:
-                //transform.Find(side).Find("Damager").GetComponent<Hero>().SetStrategy(strat);
+                //transform.Find(playerSide).Find("DM").GetComponent<Hero>().SetStrategy(strat);
                 break;
         }
 
@@ -67,9 +78,9 @@ public class MacroControl : MonoBehaviour
     public void SendTeamStrategy(int strat)
     {
         Transform sideFolder = transform.Find(playerSide);
-        /*sideFolder.Find("Jungler").GetComponent<Hero>().SetTeamStrategy(strat);
-        sideFolder.Find("Controller").GetComponent<Hero>().SetTeamStrategy(strat);
-        sideFolder.Find("Damager").GetComponent<Hero>().SetTeamStrategy(strat);*/
+        /*sideFolder.Find("JG").GetComponent<Hero>().SetTeamStrategy(strat);
+        sideFolder.Find("CT").GetComponent<Hero>().SetTeamStrategy(strat);
+        sideFolder.Find("DM").GetComponent<Hero>().SetTeamStrategy(strat);*/
     }
 
     private void FixedUpdate()
@@ -92,7 +103,7 @@ public class MacroControl : MonoBehaviour
         int blueKill = 0;
         foreach (Transform child in transform.Find("Red"))
         {
-            Transform target = GameObject.Find("GameCanvas").transform.Find("Info" + child.name);
+            Transform target = GameObject.Find("GameCanvas").transform.Find("Red Info").Find("Info" + child.name);
             redKill += child.GetComponent<Hero>().kills;
             target.Find("KD").GetComponent<Text>().text = child.GetComponent<Hero>().kills + "/" + child.GetComponent<Hero>().deaths;
             target.Find("Gold").GetComponent<Text>().text = child.GetComponent<Hero>().gold.ToString();
@@ -105,7 +116,7 @@ public class MacroControl : MonoBehaviour
         
         foreach (Transform child in transform.Find("Blue"))
         {
-            Transform target = GameObject.Find("GameCanvas").transform.Find("Info" + child.name);
+            Transform target = GameObject.Find("GameCanvas").transform.Find("Blue Info").Find("Info" + child.name);
             blueKill += child.GetComponent<Hero>().kills;
             target.Find("KD").GetComponent<Text>().text = child.GetComponent<Hero>().kills + "/" + child.GetComponent<Hero>().deaths;
             target.Find("Gold").GetComponent<Text>().text = child.GetComponent<Hero>().gold.ToString();

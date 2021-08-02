@@ -10,6 +10,7 @@ public class Combat : MonoBehaviour
     public float maxHealth;
     public float attack;
     public float defense;
+    public int goldReward; // The reward gold amount for killing this target
 
     public float attackCD = 2; // second of cooldown between two attacks
     public float lastHit = -2;
@@ -120,9 +121,9 @@ public class Combat : MonoBehaviour
         return health <= 0;
     }
 
-    // Anything that killed this object can call for reward
+    // Any hero that killed this gameobject will call for reward
     public int Loot()
     {
-        return 0;
+        return goldReward; 
     }
 }

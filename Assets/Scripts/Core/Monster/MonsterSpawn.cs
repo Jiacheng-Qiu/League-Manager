@@ -98,7 +98,7 @@ public class MonsterSpawn : MonoBehaviour
         {
             monster = (GameObject)Instantiate(Resources.Load("Prefabs/Goblin"), positions[index].position, positions[index].rotation);
         }
-
+        monster.name = monsterName;
         monster.GetComponent<MonsterMovement>().basePos = positions[index];
         monster.transform.parent = GameObject.Find("Monster Folder").transform;
         monsters[index] = monster;

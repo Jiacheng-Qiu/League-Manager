@@ -7,14 +7,12 @@ public class HeroCombat : Combat
 {
     private Skill[] skills; // 0 is auto attack, 1&2 are skills
     private float[] skillLastUsed; // Represent the time skills are last used
-    
-    private void Start()
+
+    private void Awake()
     {
         skills = new Skill[3];
         skillLastUsed = new float[3];
         //TODO: Read skills and stat from file
-
-
 
         health = maxHealth;
         controlsActivated = new bool[3];
@@ -35,6 +33,15 @@ public class HeroCombat : Combat
 
         // Control types will also affect behavior
         gameObject.GetComponent<HeroMovement>().SetMoveable(controlsActivated[0]);
+    }
+
+    // Equipment is controlled in hero base class, and will only pass updated stat amount here within array
+    public void AddEquipment(float[] coreStats)
+    {
+        maxHealth += coreStats[0];
+        attack += coreStats[1];
+        defense += coreStats[2];
+        gameObject.GetComponent<Movement>().speed += coreStats[3];
     }
 
     // Use the given skill
@@ -64,7 +71,10 @@ public class HeroCombat : Combat
 
             // Add buff effects
             if (skills[i].hasBuff)
+            {
                 target.GetComponent<Combat>().OnBuffActivate(skills[i].buff);
+            }
+                
         }
     }
 }

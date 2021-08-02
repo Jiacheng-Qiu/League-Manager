@@ -7,7 +7,7 @@ public class HeroMovement : Movement
     private PathFinding pathFinder;
     private ArrayList pathToTarget;
 
-    private void Start()
+    private void Awake()
     {
         pathFinder = new PathFinding();
         pathToTarget = new ArrayList();
@@ -27,7 +27,7 @@ public class HeroMovement : Movement
         {
             ChangeTarget(target);
         }
-        if (target != null && !moveable)
+        if (!moveable)
         {
             Move();
         }
