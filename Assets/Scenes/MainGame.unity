@@ -13031,6 +13031,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1298846671}
+  - component: {fileID: 1298846672}
+  - component: {fileID: 1298846673}
   m_Layer: 0
   m_Name: Red Spawn
   m_TagString: Untagged
@@ -13052,6 +13054,35 @@ Transform:
   m_Father: {fileID: 1333746745}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1298846672
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298846670}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.2, y: 0.8}
+  serializedVersion: 2
+  m_Radius: 1.6
+--- !u!114 &1298846673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298846670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e9ab1006624a347bff0e59124571c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  side: Red
 --- !u!1 &1312112794
 GameObject:
   m_ObjectHideFlags: 0
@@ -15850,6 +15881,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1747045313}
+  - component: {fileID: 1747045314}
+  - component: {fileID: 1747045315}
   m_Layer: 0
   m_Name: Blue Spawn
   m_TagString: Untagged
@@ -15871,6 +15904,35 @@ Transform:
   m_Father: {fileID: 1333746745}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1747045314
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747045312}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.2, y: 0.8}
+  serializedVersion: 2
+  m_Radius: 1.6
+--- !u!114 &1747045315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747045312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e9ab1006624a347bff0e59124571c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  side: Blue
 --- !u!1 &1786356969
 GameObject:
   m_ObjectHideFlags: 0

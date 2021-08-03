@@ -14,10 +14,11 @@ public class HeroMovement : Movement
     }
 
     // Assign new moving target, this target can be ally or terrain
-    public void ChangeTarget(GameObject target)
+    public new void SetTarget(GameObject target)
     {
         this.target = target;
-        pathToTarget = pathFinder.FindPath(transform.position, target.transform.position);
+        if (target != null)
+            pathToTarget = pathFinder.FindPath(transform.position, target.transform.position);
     }
 
     private void FixedUpdate()
@@ -25,7 +26,7 @@ public class HeroMovement : Movement
         // Check the position of target, if it's too far from the last node, reassign path
         if (target != null && Vector3.Distance(target.transform.position, transform.position) > 5 && (pathToTarget.Count == 0 || Vector3.Distance(target.transform.position, (Vector3)pathToTarget[pathToTarget.Count - 1]) > 3))
         {
-            ChangeTarget(target);
+            SetTarget(target);
         }
         if (!moveable)
         {

@@ -13,10 +13,12 @@ public class Combat : MonoBehaviour
     public int goldReward; // The reward gold amount for killing this target
 
     public float attackCD = 2; // second of cooldown between two attacks
-    public float lastHit = -2;
+    public float lastHit = -2; // Records time of the last hit done
     public string enemyLayer = "";
     public GameObject target = null;
     public bool isImmune;
+
+    public GameObject lastAttacker; // Records the object that last attacked this
 
     public bool[] controlsActivated; //0=dizzy , 1=blind, 2=silent
     // Records all current active buffs
@@ -118,6 +120,7 @@ public class Combat : MonoBehaviour
             return false;
         }
         health -= damage * (1 - defense);
+        lastAttacker = attacker;
         return health <= 0;
     }
 

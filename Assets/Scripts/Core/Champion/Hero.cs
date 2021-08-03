@@ -18,6 +18,8 @@ public class Hero : MonoBehaviour
     public int kills; // Record heroes killed
     public int deaths; // Record amount of times died
 
+    private bool returnToBase; // Only true when player is on process of healing or returning to base
+
     private HeroCombat combat;
     private HeroMovement movement;
 
@@ -46,13 +48,19 @@ public class Hero : MonoBehaviour
         // TODO: Caution! this fixed update is called before Start() in combat class
         if (combat.health <= 0.2f * combat.maxHealth)
         {
-            combat.ChangeTarget(null);
-            movement.ChangeTarget(GameObject.Find("Hero Destination").transform.Find(side + "Spawn").gameObject);
+            combat.SetTarget(null);
+            movement.SetTarget(GameObject.Find("Hero Destination").transform.Find(side + " Spawn").gameObject);
+            returnToBase = true;
+        }
+        else if(returnToBase && combat.health >= 0.9f * combat.maxHealth)
+        {
+            movement.SetTarget(null);
+            returnToBase = false;
         }
         // Otherwise, let hero go for the best target existing, prioritizing: enemy nearby low on HP, tower low on HP(lane champ)/monster low on HP(jungle), crystal(late game for all roles), original target
-        else if(combat.target == null && movement.target == null)
+        if(combat.target == null && movement.target == null)
         {
-            // GO for the monsters existing
+            // GO for the monsters existing`
             // Same side for farm
             switch (strategy)
             {
@@ -62,9 +70,9 @@ public class Hero : MonoBehaviour
                         Transform nextTarget = GameObject.Find("Monster Folder").transform.Find(side + i);
                         if (nextTarget != null)
                         {
-                            combat.ChangeTarget(nextTarget.gameObject);
+                            combat.SetTarget(nextTarget.gameObject);
                             Debug.Log(nextTarget.transform.position);
-                            movement.ChangeTarget(nextTarget.gameObject);
+                            movement.SetTarget(nextTarget.gameObject);
                             break;
                         }
                     }
@@ -74,8 +82,8 @@ public class Hero : MonoBehaviour
                         Transform nextTarget = GameObject.Find("Monster Folder").transform.Find("Goblin");
                         if (nextTarget != null)
                         {
-                            combat.ChangeTarget(nextTarget.gameObject);
-                            movement.ChangeTarget(nextTarget.gameObject);
+                            combat.SetTarget(nextTarget.gameObject);
+                            movement.SetTarget(nextTarget.gameObject);
                         }
                     }
                     break;
@@ -87,9 +95,9 @@ public class Hero : MonoBehaviour
                         Transform nextTarget = GameObject.Find("Monster Folder").transform.Find(otherside + i);
                         if (nextTarget != null)
                         {
-                            combat.ChangeTarget(nextTarget.gameObject);
+                            combat.SetTarget(nextTarget.gameObject);
                             Debug.Log(nextTarget.transform.position);
-                            movement.ChangeTarget(nextTarget.gameObject);
+                            movement.SetTarget(nextTarget.gameObject);
                             break;
                         }
                     }
@@ -99,8 +107,8 @@ public class Hero : MonoBehaviour
                         Transform nextTarget = GameObject.Find("Monster Folder").transform.Find("Goblin");
                         if (nextTarget != null)
                         {
-                            combat.ChangeTarget(nextTarget.gameObject);
-                            movement.ChangeTarget(nextTarget.gameObject);
+                            combat.SetTarget(nextTarget.gameObject);
+                            movement.SetTarget(nextTarget.gameObject);
                         }
                     }
                     break;
@@ -108,6 +116,13 @@ public class Hero : MonoBehaviour
             
             // If there is still no available target, stay at position TODO
         }
+    }
+
+
+    public void AddGold(int gold)
+    {
+        totalGold += gold;
+        this.gold += gold;
     }
 
     public void BuyEquipment()

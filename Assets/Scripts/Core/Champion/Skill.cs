@@ -8,8 +8,8 @@ public class Skill
     public bool isMelee; // Melee attack deals damage instantly
     public bool isRanged; // Controls if ability is ranged
     public float range; // If is ranged attack, controls size of collider
-    public float maxDistance; // Control the max distance the skill attack
-    public float moveSpeed; // If is ranged ability, controls the speed of collider
+    public float maxDistance; // Control the max distance the skill can reach (for melee and ranged)
+    public float moveSpeed; // Controls the speed of moving skill collider (for ranged)
 
     public bool onAlly; // If true the skill will only affect targets on same side
     public bool hasBuff;
