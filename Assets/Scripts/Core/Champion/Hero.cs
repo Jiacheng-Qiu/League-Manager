@@ -19,19 +19,23 @@ public class Hero : MonoBehaviour
     public int deaths; // Record amount of times died
 
     private bool returnToBase; // Only true when player is on process of healing or returning to base
+    private GameObject basePos;
+    private GameObject laneMidPos;
 
     private HeroCombat combat;
     private HeroMovement movement;
 
     public void Init(int role, string heroName, string side)
     {
-        // Load all resources and info according to hero name
+        // TODO: Load all resources and info according to hero name
 
         this.role = role;
         this.heroName = heroName;
         combat = gameObject.GetComponent<HeroCombat>();
         movement = gameObject.GetComponent<HeroMovement>();
         this.side = side;
+        this.basePos = GameObject.Find("Hero Destination").transform.Find(side + " Spawn").gameObject;
+        this.laneMidPos = GameObject.Find("Hero Destination").transform.Find("Mid Path").gameObject;
     }
 
     private void FixedUpdate()
@@ -49,19 +53,56 @@ public class Hero : MonoBehaviour
         if (combat.health <= 0.2f * combat.maxHealth)
         {
             combat.SetTarget(null);
-            movement.SetTarget(GameObject.Find("Hero Destination").transform.Find(side + " Spawn").gameObject);
+            movement.SetTarget(basePos);
             returnToBase = true;
         }
-        else if(returnToBase && combat.health >= 0.9f * combat.maxHealth)
+        else if(returnToBase && combat.health >= 0.95f * combat.maxHealth)
         {
             movement.SetTarget(null);
             returnToBase = false;
         }
-        // Otherwise, let hero go for the best target existing, prioritizing: enemy nearby low on HP, tower low on HP(lane champ)/monster low on HP(jungle), crystal(late game for all roles), original target
-        if(combat.target == null && movement.target == null)
+
+        // Otherwise, let hero go for the best target existing according to their roles, prioritizing: enemy nearby low on HP, tower low on HP(lane champ)/monster low on HP(jungle), crystal(late game for all roles), original target
+        switch (role)
+        {
+            case 0:
+                JungleStrategy();
+                break;
+            default:
+                LaneStrategy();
+                break;
+        }
+        
+    }
+
+
+    public void AddGold(int gold)
+    {
+        totalGold += gold;
+        this.gold += gold;
+    }
+
+    public void BuyEquipment()
+    {
+
+    }
+
+    public void SetTeamStrategy(int strat)
+    {
+        this.teamStrategy = strat;
+    }
+
+    public void SetStrategy(int strat)
+    {
+        this.strategy = strat;
+    }
+
+    private void JungleStrategy()
+    {
+        if (combat.target == null && movement.target == null)
         {
             // GO for the monsters existing`
-            // Same side for farm
+            // Same side for farm, different side for invade
             switch (strategy)
             {
                 case 0:
@@ -113,30 +154,40 @@ public class Hero : MonoBehaviour
                     }
                     break;
             }
-            
-            // If there is still no available target, stay at position TODO
+        }
+        else
+        {
+            // TODO: When enemy jungler starts invade/attack, fight back
+
         }
     }
 
-
-    public void AddGold(int gold)
+    private void LaneStrategy()
     {
-        totalGold += gold;
-        this.gold += gold;
-    }
+        // Different from jungler, laner will also have to adjust targets for different situations (like suffering tower attack)
+        // Representing healthy, will actively fight with enemy, and try to push
 
-    public void BuyEquipment()
-    {
+        if (movement.target.Equals(laneMidPos) && Vector3.Distance(transform.position, laneMidPos.transform.position) <= 1f)
+        {
+            movement.SetTarget(null);
+        }
 
-    }
+        if (combat.health >= 0.8f * combat.maxHealth)
+        {
+            // If hero is at friendly side of the map, first go to midpoint, then go for the lane and towers
+            if ((side == "red" && transform.position.x < -6) || (side == "blue" && transform.position.x > 6))
+            {
 
-    public void SetTeamStrategy(int strat)
-    {
-        this.teamStrategy = strat;
-    }
+            }
+        }
+        // Representing balanced situations, will carefully control lane and wont leave tower for long
+        else if (combat.health >= 0.5f * combat.maxHealth)
+        {
 
-    public void SetStrategy(int strat)
-    {
-        this.strategy = strat;
+        }
+        // Will only try to farm, and not fight
+        else {
+
+        }
     }
 }

@@ -12,11 +12,11 @@ public class EnemyDetection : MonoBehaviour
     private void Start()
     {
         enemyList = new ArrayList();
-        if (transform.parent.tag.Equals("Structure"))
+        if (transform.parent.CompareTag("Structure"))
         {
             objectType = 0;
             combat = transform.parent.GetComponent<Building>();
-        } else if (transform.parent.tag.Equals("Minion"))
+        } else if (transform.parent.CompareTag("Minion"))
         {
             objectType = 1;
             combat = transform.parent.GetComponent<MinionCombat>();
@@ -35,7 +35,7 @@ public class EnemyDetection : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer(combat.enemyLayer))
         {
             // For all cases these tags work
-            if (other.tag == "Minion" || other.tag == "Structure")
+            if (other.CompareTag("Minion") || other.CompareTag("Structure"))
             {
                 if (combat.GetTarget() == null)
                 {
@@ -48,7 +48,7 @@ public class EnemyDetection : MonoBehaviour
                 }
             }
             // For buildings they will also attack heros
-            else if (objectType == 0 &&  other.tag == "Hero")
+            else if (objectType == 0 && other.CompareTag("Hero"))
             {
                 if (combat.GetTarget() == null)
                 {

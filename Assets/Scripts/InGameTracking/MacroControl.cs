@@ -32,15 +32,20 @@ public class MacroControl : MonoBehaviour
         // First fetch and assign heroes onto specific positions in game
         // Resources.Load("Prefabs/Heroes/");
 
-        // Put all six heroes on position
+        // TODO: Put all six heroes on position
         GameObject hero = Instantiate(Resources.Load("Heroes/HeroSample")) as GameObject;
         hero.name = "JG";
         hero.GetComponent<Hero>().Init(0, "Killer", "Red");
         hero.layer = LayerMask.NameToLayer("Red");
         hero.transform.SetParent(GameObject.Find("Hero Folder").transform.Find("Red"));
-        hero.transform.position = new Vector3(-14, 6, 0);
+        hero.transform.position = new Vector3(-14.5f, 6, 0);
 
-
+        hero = Instantiate(Resources.Load("Heroes/HeroSample")) as GameObject;
+        hero.name = "DM";
+        hero.GetComponent<Hero>().Init(2, "Sniper", "Red");
+        hero.layer = LayerMask.NameToLayer("Red");
+        hero.transform.SetParent(GameObject.Find("Hero Folder").transform.Find("Red"));
+        hero.transform.position = new Vector3(-13.5f, 5, 0);
 
         // On startup, set onclick for balance as team strategy, and farm for all heros
         teamButton.GetComponent<Button>().onClick.Invoke();
@@ -69,7 +74,7 @@ public class MacroControl : MonoBehaviour
                 //transform.Find(playerSide).Find("CT").GetComponent<Hero>().SetStrategy(strat);
                 break;
             case 2:
-                //transform.Find(playerSide).Find("DM").GetComponent<Hero>().SetStrategy(strat);
+                transform.Find(playerSide).Find("DM").GetComponent<Hero>().SetStrategy(strat);
                 break;
         }
 
